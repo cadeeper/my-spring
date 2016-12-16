@@ -10,6 +10,8 @@ import org.aopalliance.intercept.MethodInterceptor;
 import java.util.List;
 
 /**
+ * 代理生成类，实现了BeanPostProcessor和BeanFactoryAware,后者可以获取到beanFactory实例，实现前者可以在每个bean在初始化时调用，
+ * 判断是否满足代理条件，满足则返回代理对象。<br/>
  * Created by nut on 2016/12/14.
  */
 public class DefaultAdvisorAutoProxyCreator implements BeanPostProcessor, BeanFactoryAware {
@@ -32,20 +34,21 @@ public class DefaultAdvisorAutoProxyCreator implements BeanPostProcessor, BeanFa
 
 		List<DefaultPointcutAdvisor> defaultPointcutAdvisors = beanFactory
 				.getBeansForType(DefaultPointcutAdvisor.class);
-        for(DefaultPointcutAdvisor advisor : defaultPointcutAdvisors){
-			if(advisor.getPointcut().getClassFilter().matches(bean.getClass())){
+		for (DefaultPointcutAdvisor advisor : defaultPointcutAdvisors) {
+			if (advisor.getPointcut().getClassFilter().matches(bean.getClass())) {
 				ProxyFactory advisedSupport = new ProxyFactory();
 				advisedSupport.setMethodInterceptor((MethodInterceptor) advisor.getAdvice());
 				advisedSupport.setMethodMatcher(advisor.getPointcut().getmethodMatcher());
-				advisedSupport.setTargetSource(new TargetSource(bean.getClass(),bean.getClass().getInterfaces(),bean));
+				advisedSupport
+						.setTargetSource(new TargetSource(bean.getClass(), bean.getClass().getInterfaces(), bean));
 				return advisedSupport.getProxy();
 			}
-        }
+		}
 		return null;
 	}
 
 	@Override
 	public void setBeanFactory(AbstractBeanFactory beanFactory) throws Exception {
 		this.beanFactory = beanFactory;
-}
+	}
 }

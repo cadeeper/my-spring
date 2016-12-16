@@ -1,6 +1,7 @@
 package indi.nut.myspring.ioc.aop;
 
 /**
+ * 代理工厂，保存一个AopProxyFactory,可以通过不同的AopProxyFactory来获取代理对象
  * Created by nut on 2016/12/14.
  */
 public class ProxyFactory extends AdvisedSupport{

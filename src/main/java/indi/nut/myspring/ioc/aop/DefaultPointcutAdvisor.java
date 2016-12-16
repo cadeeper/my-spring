@@ -3,6 +3,7 @@ package indi.nut.myspring.ioc.aop;
 import org.aopalliance.aop.Advice;
 
 /**
+ * 默认pointcutAdvisor，内置的pointcut默认初始化为TruePointcut.,<br/>
  * Created by nut on 2016/12/14.
  */
 public class DefaultPointcutAdvisor implements PointcutAdvisor{

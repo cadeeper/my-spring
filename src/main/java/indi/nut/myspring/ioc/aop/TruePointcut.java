@@ -5,6 +5,7 @@ import org.aopalliance.aop.Advice;
 import java.awt.*;
 
 /**
+ * 永远返回True
  * Created by nut on 2016/12/14.
  */
 public class TruePointcut implements Pointcut {

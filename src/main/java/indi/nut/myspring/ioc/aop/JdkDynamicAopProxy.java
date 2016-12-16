@@ -8,6 +8,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
 /**
+ * AopProxy的jdk动态代理实现
  * Created by nut on 2016/12/14.
  */
 public class JdkDynamicAopProxy implements AopProxy,InvocationHandler {
