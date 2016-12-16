@@ -1,6 +1,7 @@
 package indi.nut.myspring.ioc.beans;
 
 /**
+ * Bean定义类，封装由IoC容器管理的Bean的一些关键属性
  * Created by nut on 2016/12/13.
  */
 public class BeanDefinition {
@@ -9,6 +10,9 @@ public class BeanDefinition {
 
     private Class beanClass;
 
+    /**
+     * 全类名
+     */
     private String beanClassName;
 
     private PropertyValues propertyValues = new PropertyValues();

@@ -10,28 +10,29 @@ import indi.nut.myspring.ioc.beans.io.URLResourceLoader;
 import java.util.Map;
 
 /**
+ * ClasspathXmlApplicationContext, 继承自AbstractApplicationContext,实现了从xml中加载类定义，并保存到内置的beanFactory中。<br/>
  * Created by nut on 2016/12/13.
  */
 public class ClasspathXmlApplicationContext extends AbstractApplicationContext {
 
-    private String configLocation;
+	private String configLocation;
 
-    public ClasspathXmlApplicationContext(String configLocation) throws Exception {
-        this(configLocation, new AutowireCapableBeanFactory());
-    }
+	public ClasspathXmlApplicationContext(String configLocation) throws Exception {
+		this(configLocation, new AutowireCapableBeanFactory());
+	}
 
-    public ClasspathXmlApplicationContext(String configLocation, AbstractBeanFactory beanFactory) throws Exception {
-        super(beanFactory);
-        this.configLocation = configLocation;
-        refresh();
-    }
+	public ClasspathXmlApplicationContext(String configLocation, AbstractBeanFactory beanFactory) throws Exception {
+		super(beanFactory);
+		this.configLocation = configLocation;
+		refresh();
+	}
 
-    @Override
-    protected void loadBeanDefinitions(AbstractBeanFactory beanFactory) throws Exception {
-        XmlBeanDefinitionReader xmlBeanDefinitionReader = new XmlBeanDefinitionReader(new URLResourceLoader());
-        xmlBeanDefinitionReader.loadBeanDefinitions(configLocation);
-        for(Map.Entry<String, BeanDefinition> entry : xmlBeanDefinitionReader.getRegistry().entrySet()){
-            beanFactory.registerBeanDefinition(entry.getKey(), entry.getValue());
-        }
-    }
+	@Override
+	protected void loadBeanDefinitions(AbstractBeanFactory beanFactory) throws Exception {
+		XmlBeanDefinitionReader xmlBeanDefinitionReader = new XmlBeanDefinitionReader(new URLResourceLoader());
+		xmlBeanDefinitionReader.loadBeanDefinitions(configLocation);
+		for (Map.Entry<String, BeanDefinition> entry : xmlBeanDefinitionReader.getRegistry().entrySet()) {
+			beanFactory.registerBeanDefinition(entry.getKey(), entry.getValue());
+		}
+	}
 }

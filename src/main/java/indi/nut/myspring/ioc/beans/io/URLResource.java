@@ -6,6 +6,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 /**
+ * Url资源，从Url中获取资源
  * Created by nut on 2016/12/13.
  */
 public class URLResource implements Resource {

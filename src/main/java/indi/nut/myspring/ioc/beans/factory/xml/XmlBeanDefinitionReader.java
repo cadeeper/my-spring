@@ -13,6 +13,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.InputStream;
 
 /**
+ * Xml bean定义加载器，从xml中加载bean定义
  * Created by nut on 2016/12/13.
  */
 public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {

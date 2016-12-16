@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 属性键值对list，可以增强获取属性时的方法
  * Created by nut on 2016/12/13.
  */
 public class PropertyValues {
