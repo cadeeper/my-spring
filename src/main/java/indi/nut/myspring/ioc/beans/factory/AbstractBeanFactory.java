@@ -3,6 +3,7 @@ package indi.nut.myspring.ioc.beans.factory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 import indi.nut.myspring.ioc.beans.BeanDefinition;
@@ -76,8 +77,8 @@ public abstract class AbstractBeanFactory implements BeanFactory {
         beanPostProcessors.add(beanPostProcessor);
     }
 
-    public List<Object> getBeansForType(Class type) throws Exception{
-        List<Object> beans = new ArrayList<>();
+    public List getBeansForType(Class type) throws Exception{
+        List beans = new ArrayList<>();
         for(String beanDefinitionName : beanDefinitionNames){
             if(type.isAssignableFrom(beanDefinitionMap.get(beanDefinitionName).getBeanClass())){
                 beans.add(getBean(beanDefinitionName));

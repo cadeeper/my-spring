@@ -25,7 +25,7 @@ public class AutowireCapableBeanFactory extends AbstractBeanFactory {
 
 			if(value instanceof BeanReference){
 			    BeanReference beanReference = (BeanReference) value;
-			    getBean(beanReference.getName());
+			    value = getBean(beanReference.getName());
             }
 
 			try {
