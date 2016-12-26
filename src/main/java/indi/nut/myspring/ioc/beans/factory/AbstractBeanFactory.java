@@ -30,14 +30,14 @@ public abstract class AbstractBeanFactory implements BeanFactory {
         Object bean = beanDefinition.getBean();
         if(bean == null){
             bean = doCreateBean(beanDefinition);
-            bean = initializeBean(bean, name);
+            bean = initializeBean(bean, name, beanDefinition);
             beanDefinition.setBean(bean);
         }
         return bean;
     }
 
     /**
-     * 使用单例的方式初始化所有bean, 目前只实现了单例模式。
+     * 使用单例的方式初始化所有BEAN, 目前只实现了单例模式。
      * @throws Exception
      */
     public void preInstantiateSingletons() throws Exception {
@@ -64,13 +64,13 @@ public abstract class AbstractBeanFactory implements BeanFactory {
      * @return
      * @throws Exception
      */
-    protected Object initializeBean(Object bean, String beanName) throws Exception{
+    protected Object initializeBean(Object bean, String beanName, BeanDefinition bdm) throws Exception{
 
         for( BeanPostProcessor beanPostProcessor : beanPostProcessors ){
             bean = beanPostProcessor.postProcessBeforeInitialization(bean, beanName);
         }
 
-        //TODO initailze method   未实现
+        invokeInitMethods(bean, beanName, bdm);
 
         for (BeanPostProcessor beanPostProcessor : beanPostProcessors ){
             bean = beanPostProcessor.postProcessAfterInitialization(bean, beanName);
@@ -84,6 +84,23 @@ public abstract class AbstractBeanFactory implements BeanFactory {
         applyPropertyValues(bean, beanDefinition);
         return bean;
     }
+
+
+    /**
+     * 初始化方法, 只是简单调用实现了InitializingBean接口的bean的afterPropertiesSet()方法
+     * @param bean
+     * @param beanName
+     */
+    protected void invokeInitMethods(Object bean, String beanName, BeanDefinition bdm) throws Exception{
+
+        boolean isInitializingBean = (bean instanceof InitializingBean);
+        if(isInitializingBean){
+            ((InitializingBean)bean).afterPropertiesSet();
+        }
+
+    }
+
+
 
     /**
      * 注入属性，由子类实现
