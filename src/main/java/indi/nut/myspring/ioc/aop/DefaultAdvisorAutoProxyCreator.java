@@ -1,8 +1,7 @@
 package indi.nut.myspring.ioc.aop;
 
 import indi.nut.myspring.ioc.beans.BeanPostProcessor;
-import indi.nut.myspring.ioc.beans.factory.AbstractBeanFactory;
-import indi.nut.myspring.ioc.beans.factory.BeanFactory;
+import indi.nut.myspring.ioc.beans.factory.AbstractAutowireCapableBeanFactory;
 import indi.nut.myspring.ioc.beans.factory.BeanFactoryAware;
 import org.aopalliance.aop.Advice;
 import org.aopalliance.intercept.MethodInterceptor;
@@ -16,7 +15,7 @@ import java.util.List;
  */
 public class DefaultAdvisorAutoProxyCreator implements BeanPostProcessor, BeanFactoryAware {
 
-	private AbstractBeanFactory beanFactory;
+	private AbstractAutowireCapableBeanFactory beanFactory;
 
 	@Override
 	public Object postProcessBeforeInitialization(Object bean, String beanName) throws Exception {
@@ -48,7 +47,7 @@ public class DefaultAdvisorAutoProxyCreator implements BeanPostProcessor, BeanFa
 	}
 
 	@Override
-	public void setBeanFactory(AbstractBeanFactory beanFactory) throws Exception {
+	public void setBeanFactory(AbstractAutowireCapableBeanFactory beanFactory) throws Exception {
 		this.beanFactory = beanFactory;
 	}
 }

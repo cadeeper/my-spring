@@ -6,5 +6,5 @@ package indi.nut.myspring.ioc.beans.factory;
  */
 public interface BeanFactoryAware {
 
-    void setBeanFactory(AbstractBeanFactory beanFactory) throws Exception;
+    void setBeanFactory(AbstractAutowireCapableBeanFactory beanFactory) throws Exception;
 }

@@ -1,7 +1,8 @@
 package indi.nut.myspring.ioc.context;
 
 import indi.nut.myspring.ioc.beans.BeanPostProcessor;
-import indi.nut.myspring.ioc.beans.factory.AbstractBeanFactory;
+import indi.nut.myspring.ioc.beans.factory.AbstractAutowireCapableBeanFactory;
+import indi.nut.myspring.ioc.context.support.ApplicationContextAwareProcessor;
 
 import java.util.List;
 
@@ -14,9 +15,9 @@ import java.util.List;
  */
 public abstract class AbstractApplicationContext implements ApplicationContext {
 
-    protected AbstractBeanFactory beanFactory;
+    protected AbstractAutowireCapableBeanFactory beanFactory;
 
-    public AbstractApplicationContext(AbstractBeanFactory abstractBeanFactory){
+    public AbstractApplicationContext(AbstractAutowireCapableBeanFactory abstractBeanFactory){
         this.beanFactory = abstractBeanFactory;
     }
 
@@ -27,21 +28,31 @@ public abstract class AbstractApplicationContext implements ApplicationContext {
     }
 
     protected void onRefresh() throws Exception{
+        prepareBeanFactory(this.beanFactory);
         beanFactory.preInstantiateSingletons();
     }
 
 
-    protected void registerBeanPostProcessors(AbstractBeanFactory beanFactory) throws Exception {
+    protected void registerBeanPostProcessors(AbstractAutowireCapableBeanFactory beanFactory) throws Exception {
         List<Object> beanPostProcessors = beanFactory.getBeansForType(BeanPostProcessor.class);
         for(Object beanPostProcessor : beanPostProcessors){
             beanFactory.addBeanPostProcessor((BeanPostProcessor) beanPostProcessor);
         }
     }
 
-    protected abstract void loadBeanDefinitions(AbstractBeanFactory beanFactory) throws Exception;
+    protected void prepareBeanFactory(AbstractAutowireCapableBeanFactory beanFactory){
+        beanFactory.addBeanPostProcessor(new ApplicationContextAwareProcessor(this));
+    }
+
+    protected abstract void loadBeanDefinitions(AbstractAutowireCapableBeanFactory beanFactory) throws Exception;
 
     @Override
     public Object getBean(String name) throws Exception {
         return beanFactory.getBean(name);
+    }
+
+    @Override
+    public AbstractAutowireCapableBeanFactory getAutoWireCapableBeanFactory() throws Exception {
+        return this.beanFactory;
     }
 }
