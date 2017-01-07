@@ -7,6 +7,8 @@ import java.util.List;
  */
 public interface ListableBeanFactory extends BeanFactory {
 
-    public List getBeansForType(Class type) throws Exception;
+    List getBeansForType(Class type) throws Exception;
+
+    String[] getBeanNamesForType(Class<?> type);
 
 }

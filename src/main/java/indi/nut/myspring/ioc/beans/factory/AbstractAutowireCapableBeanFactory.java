@@ -2,10 +2,7 @@ package indi.nut.myspring.ioc.beans.factory;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 import indi.nut.myspring.ioc.beans.BeanDefinition;
@@ -164,5 +161,10 @@ public abstract class AbstractAutowireCapableBeanFactory implements ListableBean
             }
         }
         return beans;
+    }
+
+    @Override
+    public String[] getBeanNamesForType(Class<?> type) {
+        return beanDefinitionNames.toArray(new String[beanDefinitionNames.size()]);
     }
 }
